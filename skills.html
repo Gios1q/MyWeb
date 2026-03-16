@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!-- Объявление типа документа HTML5 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Кодировка символов -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Адаптивность под мобильные экраны -->
+    <title>Skills</title>
+    <!-- Заголовок вкладки браузера -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Подключение общего файла стилей -->
+    <script>if(localStorage.getItem("theme")==="dark")document.documentElement.classList.add("dark");</script>
+    <!-- Мгновенное применение тёмной темы до отрисовки страницы -->
+</head>
+<body>
+
+<div class="app">
+    <!-- Главная обёртка всего приложения -->
+    <div class="top-curve"></div>
+    <!-- Декоративный верхний изгиб страницы -->
+    <div class="header">Skills</div>
+    <!-- Заголовок страницы в шапке -->
+
+    <div class="content">
+        <!-- Прокручиваемая область с основным контентом -->
+        <div class="skills-inner">
+            <!-- Внутренний контейнер страницы навыков -->
+
+            <h2>Technical Skills</h2>
+ <!-- ГРУППА 1: Тестирование (QA)  -->
+            <div class="skill-group">
+                <div class="skills-group-title">🔍 &nbsp;Quality Assurance</div>
+                <!-- Название группы навыков; &nbsp; — неразрывный пробел для отступа после эмодзи -->
+                <div class="skill-tags">
+                    <span class="skill-tag">Manual Testing</span>
+                    <span class="skill-tag">Functional Testing</span>
+                    <span class="skill-tag">Non-functional Testing</span>
+                    <span class="skill-tag">Integration Testing</span>
+                    <span class="skill-tag">UI Testing</span>
+                    <span class="skill-tag">Game Testing</span>
+                    <span class="skill-tag">Test Case Design</span>
+                    <span class="skill-tag">Bug Reporting & Tracking</span>
+                    <span class="skill-tag">QA Principles</span>
+                </div>
+            </div>
+
+            <!-- ГРУППА 2: Инструменты QA -->
+            <div class="skill-group">
+                <div class="skills-group-title">🛠 &nbsp;QA Tools</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Jira</span>
+                    <span class="skill-tag">TestRail</span>
+                    <span class="skill-tag">Trello</span>
+                    <span class="skill-tag">Postman</span>
+                </div>
+            </div>
+
+            <!-- ГРУППА 3: Технические знания -->
+            <div class="skill-group">
+                <div class="skills-group-title">💻 &nbsp;Technical Knowledge</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Basic API Testing</span>
+                    <span class="skill-tag">Linux Essentials</span>
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">HTML</span>
+                    <span class="skill-tag">CSS</span>
+                </div>
+            </div>
+
+            <!-- ГРУППА 4: Мультимедиа и дизайн -->
+            <div class="skill-group">
+                <div class="skills-group-title">🎨 &nbsp;Multimedia & Design</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Adobe Photoshop</span>
+                    <span class="skill-tag">Adobe Illustrator</span>
+                    <span class="skill-tag">Adobe Premiere Pro</span>
+                    <span class="skill-tag">Figma</span>
+                    <span class="skill-tag">UI/UX Principles</span>
+                    <span class="skill-tag">Principles of Design</span>
+                </div>
+            </div>
+
+            <!-- ГРУППА 5: Ключевые компетенции -->
+            <div class="skill-group">
+                <div class="skills-group-title">⚡ &nbsp;Core Competencies</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Analytical Thinking</span>
+                    <span class="skill-tag">Attention to Detail</span>
+                    <span class="skill-tag">Teamwork</span>
+                    <span class="skill-tag">Problem Solving</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="nav">
+        <div class="nav-center">
+            <a class="nav-btn small" href="index.html">Home</a>
+            <a class="nav-btn medium" href="about.html">About me</a>
+            <a class="nav-btn main active" href="skills.html">Skills</a>
+            <a class="nav-btn medium" href="contact.html">Contact</a>
+            <a class="nav-btn small" href="portfolio.html">Portfolio</a>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn theme">🌙</button>
+        </div>
+    </div>
+</div>
+
+<script src="theme.js"></script>
+</body>
+</html>

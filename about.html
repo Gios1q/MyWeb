@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>About me</title>
+      <link rel="stylesheet" href="css/style.css">
+       <script>if(localStorage.getItem("theme")==="dark")document.documentElement.classList.add("dark");</script>
+    <!-- Немедленное применение тёмной темы при загрузке — убирает мигание -->
+
+</head>
+<body>
+
+<div class="app">
+    <!-- Главная обёртка всего интерфейса приложения -->
+    <div class="top-curve"></div>
+    <!-- Декоративный изгиб вверху страницы -->
+    <div class="header">About me</div>
+
+    <div class="content">
+               <div class="about-inner">
+            <h2>Hi, I'm Maksym 👋</h2>
+
+            <p class="about-p">My name is Maksym Bondarenko. I was born on October 27, 2006, in Bilhorod-Dnistrovskyi, Odesa region.</p>
+
+            <p class="about-p">I grew up in the village of Shabo — a calm and steady place where life moved at its own pace. I started school there when I was six and spent eleven years studying, making friends, and discovering what I cared about. Those years shaped my interests and the way I look at the world.</p>
+
+            <p class="about-p">Because of the war, my family had to move to Ireland. I settled in Enniscorthy, a small town where everything felt new — language, culture, and school. Getting used to all that wasn’t easy, but it gave me a better sense of how to adapt and keep moving forward.</p>
+
+            <p class="about-p">I continued my education at Enniscorthy Community College, where I completed my Leaving Certificate. Later, I applied to Waterford Further Education to keep learning and developing my skills.</p>
+
+            <p class="about-p">Outside of studies, I’ve always been drawn to video games — not just as entertainment, but as a way to experience stories and emotions. The Mafia trilogy stands out for me because of its strong atmosphere and moral choices.</p>
+
+            <p class="about-p">I’m also interested in philosophy — from Eastern ideas about balance and discipline to modern thoughts on society and human nature. I practice tea ceremonies to stay focused, and I draw to express ideas and moods visually. I enjoy Chinese animation and anime for their art styles and storytelling.</p>
+
+            <p class="about-p">I collect figures, listen to music of different genres, play chess, and study the game of Go — I like how it rewards patience and long‑term thinking. I also watch films and series with an eye on story structure and character development.</p>
+
+            <p class="about-p">I value discipline, thoughtful decisions, and the desire to keep improving. I respect people who are confident in their goals and dedicated to what truly matters to them.</p>
+            <!-- Последний абзац имеет доп. класс about-p-closing для особого оформления -->
+
+            <a class="about-hobbies-btn" href="hobbies.html">My Hobbies</a>
+            <!-- Кнопка для перехода на страницу с хобби -->
+        </div>
+    </div>
+
+    <div class="nav">
+        <!-- Нижняя навигационная панель -->
+        <div class="nav-center">
+
+            <a class="nav-btn small" href="portfolio.html">Portfolio</a>
+            <a class="nav-btn medium" href="index.html">Home</a>
+            <a class="nav-btn main active" href="about.html">About me</a>
+            <a class="nav-btn medium" href="skills.html">Skills</a>
+            <a class="nav-btn small" href="contact.html">Contact</a>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn theme">🌙</button>
+        </div>
+    </div>
+</div>
+
+<script src="theme.js"></script>
+<script>document.querySelector(".content").scrollTop = 0;</script>
+</body>
+</html>

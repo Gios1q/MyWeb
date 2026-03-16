@@ -1,0 +1,1317 @@
+
+/* Применяется ко всем элементам: включает border в расчёт размеров, убирает отступы */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; /* Базовый шрифт для всего сайта */
+}
+
+/* Тело страницы центрирует приложение по горизонтали и вертикали */
+body {
+    height: 100vh; /* Высота на весь экран */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f2f2f2; /* Светло-серый фон */
+    transition: background 0.3s; /* Плавная смена фона при переключении темы */
+}
+
+/* APP CONTAINER */
+/* Главный контейнер приложения белая карточка по центру страницы */
+.app {
+    width: 90%;
+    max-width: 900px; /* Максимальная ширина */
+    height: 90%;
+    background: white;
+    border-radius: 30px; /* Скруглённые углы */
+    border: 2px solid #000;
+    display: flex;
+    flex-direction: column; /* Дочерние элементы идут сверху вниз */
+    overflow: hidden; /* Обрезаем всё, что выходит за пределы */
+    position: relative;
+    transition: background 0.3s, border-color 0.3s; /* Плавная смена при смене темы */
+    min-height: 0; /* Нужно для корректной работы flex-дочерних элементов */
+}
+
+/* Декоративная дуга в верхней части приложения (SVG через background) */
+.top-curve {
+    position: absolute;
+    top: 10px;
+    left: 0;
+    right: 0;
+    height: 60px;
+    pointer-events: none; /* Не мешает кликам */
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 -70 100 120' preserveAspectRatio='none'><path d='M0 -40 Q50 50 100 -40' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/></svg>") no-repeat center;
+    background-size: 100% 100%;
+}
+
+/* HEADER */
+/* Шапка приложения с названием/заголовком */
+.header {
+    position: relative;
+    height: 48px;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    transition: color 0.3s;
+    z-index: 2; /* Поверх декоративной дуги */
+    flex-shrink: 0; /* Не сжимается при нехватке места */
+}
+
+/* CONTENT общий контейнер */
+/* Основная область с контентом страницы занимает всё оставшееся место */
+.content {
+    flex: 1 1 0; /* Занимает всё свободное пространство */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px 40px 20px;
+    text-align: center;
+    overflow-y: auto; /* Прокрутка по вертикали, если контент не влезает */
+    animation: fadeIn 0.3s ease; /* Плавное появление при смене страницы */
+    min-height: 0;
+    overflow-anchor: none; /* Отключаем автоскролл при добавлении контента */
+}
+
+/* Анимация плавного появления контента (снизу вверх с нарастанием прозрачности) */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Ограничение ширины параграфов в контент-зоне */
+.content p {
+    max-width: 500px;
+    line-height: 1.6;
+}
+
+/* HOME */
+/* Подключение шрифтов Google Fonts для главной страницы */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Raleway:wght@300;400;500&display=swap');
+
+/* Внутренний контейнер главной страницы */
+.home-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: 10px 20px 20px;
+    max-width: 540px;
+    width: 100%;
+    font-family: 'Raleway', Arial, sans-serif; /* Элегантный шрифт для домашней страницы */
+}
+
+/* Круглый аватар на главной странице */
+.home-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%; /* Делает блок круглым */
+    border: 2px solid rgba(0,0,0,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    margin-bottom: 18px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.10); /* Лёгкая тень */
+    background: #faf8f4; /* Тёплый белый фон */
+    overflow: hidden;
+    position: relative;
+}
+
+/* Псевдоэлемент вращающийся градиентный ореол вокруг аватара */
+.home-avatar::after {
+    content: '';
+    position: absolute;
+    inset: -3px; /* Выступает за пределы аватара на 3px */
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, transparent 0%, rgba(0,0,0,0.12) 35%, transparent 65%, rgba(0,0,0,0.06) 85%, transparent 100%);
+    animation: homeAvatarSpin 10s linear infinite; /* Бесконечное вращение */
+    z-index: 0;
+}
+
+/* Изображение внутри аватара */
+.home-avatar img {
+    width: 72%;
+    height: 72%;
+    object-fit: contain;
+    position: relative;
+    z-index: 1; /* Поверх вращающегося ореола */
+}
+
+/* Анимация вращения ореола аватара */
+@keyframes homeAvatarSpin { to { transform: rotate(360deg); } }
+
+/* Заголовок имени/названия на главной странице */
+.home-inner h2 {
+    font-family: 'Cinzel', Georgia, serif; /* Декоративный шрифт */
+    font-size: 1.45rem;
+    font-weight: 600;
+    letter-spacing: 0.07em; /* Широкий межбуквенный интервал */
+    margin: 0 0 6px;
+    text-align: center;
+    color: #111;
+}
+
+/* Тонкий декоративный разделитель под заголовком */
+.home-divider {
+    width: 48px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,0.4), transparent); /* Плавное появление/исчезновение */
+    border: none;
+    margin: 8px 0 16px;
+}
+
+/* Вступительный текст на главной странице */
+.home-intro {
+    font-family: 'Raleway', Arial, sans-serif;
+    font-size: 0.93rem;
+    font-weight: 300; /* Лёгкое начертание */
+    line-height: 1.8;
+    text-align: center;
+    color: #444;
+    margin: 0 0 20px;
+    max-width: 440px;
+}
+
+/* Список пунктов на главной странице */
+.home-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    width: 100%;
+    max-width: 360px;
+    margin-bottom: 18px;
+}
+
+/* Каждый пункт списка с левой полосой-акцентом */
+.home-list li {
+    font-family: 'Raleway', Arial, sans-serif;
+    font-size: 0.88rem;
+    font-weight: 400;
+    color: #444;
+    padding: 6px 14px;
+    border-left: 2px solid rgba(0,0,0,0.18); /* Вертикальная полоса слева */
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+    transition: border-color 0.2s, padding-left 0.2s;
+}
+
+/* Эффект при наведении полоса темнее и пункт сдвигается вправо */
+.home-list li:hover {
+    border-left-color: rgba(0,0,0,0.55);
+    padding-left: 20px;
+}
+
+/* Завершающий текст внизу главной страницы */
+.home-closing {
+    font-family: 'Raleway', Arial, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 300;
+    letter-spacing: 0.04em;
+    color: #888; /* Серый, ненавязчивый */
+    text-align: center;
+    font-style: italic;
+}
+
+/* dark mode home additions */
+/* Тёмная тема: стили аватара на главной странице */
+html.dark .home-avatar {
+    border-color: rgba(255,255,255,0.35);
+    background: #1a1a1a;
+    box-shadow: 0 4px 20px rgba(255,255,255,0.05);
+}
+
+/* Тёмная тема: вращающийся ореол аватара (светлый вариант) */
+html.dark .home-avatar::after {
+    background: conic-gradient(from 0deg, transparent 0%, rgba(255,255,255,0.12) 35%, transparent 65%, rgba(255,255,255,0.06) 85%, transparent 100%);
+}
+
+/* Тёмная тема: заголовок на главной странице белый */
+html.dark .home-inner h2 {
+    color: #fff;
+}
+
+/* Тёмная тема: разделитель светлый градиент */
+html.dark .home-divider {
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+}
+
+/* Тёмная тема: вступительный текст полупрозрачный белый */
+html.dark .home-intro {
+    color: rgba(255,255,255,0.7);
+}
+
+/* Тёмная тема: пункты списка */
+html.dark .home-list li {
+    color: rgba(255,255,255,0.7);
+    border-left-color: rgba(255,255,255,0.2);
+}
+
+/* Тёмная тема: наведение на пункт списка */
+html.dark .home-list li:hover {
+    border-left-color: rgba(255,255,255,0.6);
+}
+
+/* Тёмная тема: завершающий текст */
+html.dark .home-closing {
+    color: rgba(255,255,255,0.4);
+}
+
+/* ABOUT */
+/* Внутренний контейнер страницы "Обо мне" */
+.about-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    max-width: 560px;
+    width: 100%;
+    padding: 16px 4px 30px;
+}
+
+/* Заголовок страницы "Обо мне" */
+.about-inner h2 {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 6px;
+}
+
+/* Параграфы текста на странице "Обо мне" */
+.about-inner p {
+    line-height: 1.65;
+    font-size: 14px;
+    color: #444;
+}
+
+/* Контейнер для тегов-навыков/интересов */
+.about-tags {
+    display: flex;
+    flex-wrap: wrap; /* Переносит теги на следующую строку при нехватке места */
+    gap: 8px;
+    justify-content: center;
+}
+
+/* Отдельный тег (навык/интерес) */
+.about-tag {
+    padding: 5px 14px;
+    border: 2px solid #000;
+    border-radius: 20px; /* Таблетка */
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s, border-color 0.3s;
+}
+
+/* Тег при наведении инвертируется (белый текст на чёрном фоне) */
+.about-tag:hover {
+    background: #000;
+    color: #fff;
+}
+
+/* Кнопка перехода к хобби со страницы "Обо мне" */
+.about-hobbies-btn {
+    display: inline-block;
+    margin-top: 24px;
+    padding: 13px 44px;
+    border: 2px solid #000;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    color: #000;
+    letter-spacing: 0.04em;
+    transition: background 0.2s, color 0.2s;
+}
+
+/* Кнопка при наведении инвертируется */
+.about-hobbies-btn:hover {
+    background: #000;
+    color: #fff;
+}
+
+/* Тёмная тема: кнопка хобби */
+html.dark .about-hobbies-btn {
+    border-color: white;
+    color: white;
+}
+
+/* Тёмная тема: кнопка хобби при наведении */
+html.dark .about-hobbies-btn:hover {
+    background: white;
+    color: black;
+}
+
+
+/* PORTFOLIO */
+/* Внутренний контейнер страницы портфолио */
+.portfolio-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    max-width: 680px;
+    overflow-y: auto;
+    text-align: left;
+}
+
+/* Заголовок страницы портфолио */
+.portfolio-inner h2 {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+/* Сетка карточек портфолио два столбца */
+.portfolio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* Карточка проекта в портфолио */
+.portfolio-card {
+    border: 2px solid #000;
+    border-radius: 16px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.3s;
+}
+
+/* Карточка при наведении инвертируется */
+.portfolio-card:hover {
+    background: #000;
+    color: #fff;
+}
+
+/* Иконка/эмодзи карточки портфолио */
+.portfolio-card-icon {
+    font-size: 26px;
+}
+
+/* Название проекта в карточке */
+.portfolio-card h3 {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/* Описание проекта в карточке */
+.portfolio-card p {
+    font-size: 12px;
+    line-height: 1.5;
+    opacity: 0.7;
+}
+
+/* Тег технологии/категории в карточке */
+.portfolio-card .tag {
+    font-size: 11px;
+    font-weight: bold;
+    opacity: 0.5;
+    text-transform: uppercase; /* Заглавные буквы */
+    letter-spacing: 0.04em;
+    margin-top: 4px;
+}
+
+/* SKILLS */
+/* Внутренний контейнер страницы навыков */
+.skills-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 100%;
+    max-width: 580px;
+    text-align: left;
+    padding: 0 0 16px;
+}
+
+/* Заголовок страницы навыков */
+.skills-inner h2 {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Группа навыков (например: "Языки программирования", "Инструменты") */
+.skill-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid rgba(0,0,0,0.08); /* Разделитель сверху */
+    padding: 14px 0;
+}
+
+/* Последняя группа также имеет разделитель снизу */
+.skill-group:last-child {
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Заголовок группы навыков (мелкий, заглавный) */
+.skills-group-title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.4;
+    margin-bottom: 10px;
+}
+
+/* Строка с одним навыком (название + полоска + процент) */
+.skill-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Название навыка фиксированная ширина для выравнивания */
+.skill-name {
+    width: 110px;
+    font-size: 13px;
+    font-weight: 500;
+    flex-shrink: 0; /* Не сжимается */
+}
+
+/* Обёртка полосы прогресса навыка */
+.skill-bar-wrap {
+    flex: 1; /* Занимает всё доступное пространство */
+    height: 10px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color 0.3s;
+}
+
+/* Заполненная часть полосы прогресса навыка */
+.skill-bar-fill {
+    height: 100%;
+    background: #000;
+    border-radius: 10px;
+    width: 0; /* Начальное значение анимируется через JS */
+    transition: width 0.9s cubic-bezier(.4,0,.2,1), background 0.3s; /* Плавное заполнение */
+}
+
+/* Процент навыка справа от полоски */
+.skill-pct {
+    width: 36px;
+    font-size: 12px;
+    text-align: right;
+    flex-shrink: 0;
+    opacity: 0.5;
+}
+
+/* CONTACT */
+/* Внутренний контейнер страницы контактов */
+.contact-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    max-width: 300px;
+    margin: auto; /* Центрирование по горизонтали и вертикали */
+    border: 2px solid #000;
+    border-radius: 20px;
+    padding: 36px 28px;
+}
+
+/* Заголовок страницы контактов */
+.contact-inner h2 {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Форма обратной связи */
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+/* Поля ввода и текстовая область формы */
+.contact-form input,
+.contact-form textarea {
+    border: 2px solid #000;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    outline: none; /* Убираем стандартный outline браузера */
+    background: transparent;
+    color: inherit; /* Наследует цвет от родителя (поддержка тёмной темы) */
+    resize: none; /* Запрещаем ручное изменение размера */
+    transition: background 0.2s, border-color 0.3s, color 0.3s;
+}
+
+/* Поля при фокусе лёгкий серый фон */
+.contact-form input:focus,
+.contact-form textarea:focus {
+    background: rgba(0,0,0,0.05);
+}
+
+/* Текстовая область сообщения */
+.contact-form textarea {
+    height: 90px;
+}
+
+/* Кнопка отправки формы */
+.contact-form button {
+    border: 2px solid #000;
+    border-radius: 12px;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    background: #000; /* По умолчанию чёрная */
+    color: #fff;
+    transition: background 0.2s, color 0.2s, border-color 0.3s;
+}
+
+/* Кнопка при наведении инвертируется (прозрачный фон, чёрный текст) */
+.contact-form button:hover {
+    background: transparent;
+    color: #000;
+}
+
+/* Контейнер для иконок социальных сетей */
+.contact-links {
+    display: flex;
+    gap: 12px;
+}
+
+/* Ссылка на соцсеть круглая кнопка */
+.contact-link {
+    width: 38px;
+    height: 38px;
+    border: 2px solid #000;
+    border-radius: 50%; /* Круглая */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s, color 0.2s, border-color 0.3s;
+}
+
+/* Ссылка на соцсеть при наведении инвертируется */
+.contact-link:hover {
+    background: #000;
+    color: #fff;
+}
+
+/* NAVIGATION */
+/* Нижняя навигационная панель */
+.nav {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px 20px 15px;
+    flex-shrink: 0; /* Не сжимается */
+}
+
+/* Центральная группа кнопок навигации */
+.nav-center {
+    display: flex;
+    align-items: center;
+}
+
+/* Базовый стиль кнопки навигации */
+.nav-btn {
+    text-decoration: none;
+    color: black;
+    border: 2px solid #000;
+    border-radius: 14px;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+/* Маленькая кнопка навигации (крайние) */
+.nav-btn.small {
+    padding: 6px 14px;
+    margin: 0 -4px; /* Отрицательный отступ для перекрытия с соседними */
+    transform: scale(0.9); /* Немного меньше */
+}
+
+/* Средняя кнопка навигации */
+.nav-btn.medium {
+    padding: 8px 18px;
+    margin: 0 5px;
+    transform: scale(1);
+}
+
+/* Главная (центральная) кнопка навигации */
+.nav-btn.main {
+    padding: 10px 22px;
+    margin: 0 5px;
+    transform: scale(1.1); /* Немного крупнее */
+}
+
+/* Активная кнопка навигации (текущая страница) чёрный фон */
+.nav-btn.active {
+    background: black;
+    color: white;
+}
+
+/* Кнопка при наведении */
+.nav-btn:hover {
+    background: black;
+    color: white;
+}
+
+/* Активная кнопка при наведении инвертируется обратно */
+.nav-btn.active:hover {
+    background: white;
+    color: black;
+}
+
+/* Правая группа иконок-кнопок (тёмная тема и т.д.) */
+.nav-right {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%); /* Центрирование по вертикали */
+    margin-top: 8px;
+    display: flex;
+    gap: 10px;
+}
+
+/* Круглая иконка-кнопка (например, переключатель темы) */
+.icon-btn {
+    width: 34px;
+    height: 34px;
+    border: 2px solid #000;
+    border-radius: 50%; /* Круглая */
+    background: white;
+    font-size: 16px;
+    line-height: 1;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Иконка-кнопка при наведении инвертируется */
+.icon-btn:hover {
+    background: black;
+    color: white;
+}
+
+/* Левая группа кнопок навигации (например, кнопка "Назад") */
+.nav-left {
+    position: absolute;
+    left: 14px;
+    display: flex;
+    align-items: center;
+}
+
+/* Кнопка информации/справки */
+.icon-btn.info {
+    font-size: 20px;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Кнопка информации при наведении */
+.icon-btn.info:hover {
+    background: black;
+    color: white;
+}
+
+/* Декоративная дуга над навигационной панелью (SVG через псевдоэлемент) */
+.nav::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -4px;
+    right: -4px;
+    height: 24px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'><path d='M0 16 Q50 -1 100 16' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/></svg>") no-repeat center;
+    background-size: 100% 100%;
+    pointer-events: none; /* Не мешает кликам */
+}
+
+/* DARK MODE */
+/* Тёмная тема: фон всей страницы */
+html.dark {
+    background: #111;
+}
+
+/* Тёмная тема: главный контейнер приложения */
+html.dark .app {
+    background: #111;
+    border-color: white;
+}
+
+/* Тёмная тема: все основные текстовые элементы белые */
+html.dark .header,
+html.dark .content p,
+html.dark .home-inner p,
+html.dark .about-inner p,
+html.dark .home-inner h2,
+html.dark .about-inner h2,
+html.dark .portfolio-inner h2,
+html.dark .skills-inner h2,
+html.dark .contact-inner h2 {
+    color: white;
+}
+
+/* Тёмная тема: рамка аватара */
+html.dark .home-avatar {
+    border-color: white;
+}
+
+/* Тёмная тема: теги на странице "Обо мне" */
+html.dark .about-tag {
+    border-color: white;
+    color: white;
+}
+
+/* Тёмная тема: тег при наведении */
+html.dark .about-tag:hover {
+    background: white;
+    color: black;
+}
+
+/* Тёмная тема: карточки портфолио */
+html.dark .portfolio-card {
+    border-color: white;
+    color: white;
+}
+
+/* Тёмная тема: карточка при наведении */
+html.dark .portfolio-card:hover {
+    background: white;
+    color: black;
+}
+
+/* Тёмная тема: рамка полосы прогресса навыка */
+html.dark .skill-bar-wrap {
+    border-color: white;
+}
+
+/* Тёмная тема: заполнение полосы прогресса */
+html.dark .skill-bar-fill {
+    background: white;
+}
+
+/* Тёмная тема: текст навыков */
+html.dark .skill-name,
+html.dark .skill-pct,
+html.dark .skills-group-title {
+    color: white;
+}
+
+/* Тёмная тема: контейнер контактов */
+html.dark .contact-inner {
+    border-color: white;
+}
+
+/* Тёмная тема: поля формы */
+html.dark .contact-form input,
+html.dark .contact-form textarea {
+    border-color: white;
+    color: white;
+}
+
+/* Тёмная тема: поля формы при фокусе */
+html.dark .contact-form input:focus,
+html.dark .contact-form textarea:focus {
+    background: rgba(255,255,255,0.07);
+}
+
+/* Тёмная тема: плейсхолдеры полей формы */
+html.dark .contact-form input::placeholder,
+html.dark .contact-form textarea::placeholder {
+    color: rgba(255,255,255,0.4);
+}
+
+/* Тёмная тема: кнопка отправки формы */
+html.dark .contact-form button {
+    border-color: white;
+    background: white;
+    color: black;
+}
+
+/* Тёмная тема: кнопка отправки при наведении */
+html.dark .contact-form button:hover {
+    background: transparent;
+    color: white;
+}
+
+/* Тёмная тема: ссылки соцсетей */
+html.dark .contact-link {
+    border-color: white;
+    color: white;
+}
+
+/* Тёмная тема: ссылки соцсетей при наведении */
+html.dark .contact-link:hover {
+    background: white;
+    color: black;
+}
+
+/* Тёмная тема: кнопки навигации */
+html.dark .nav-btn {
+    border-color: white;
+    color: white;
+    background: transparent;
+}
+
+/* Тёмная тема: активная кнопка навигации */
+html.dark .nav-btn.active {
+    background: white;
+    color: black;
+}
+
+/* Тёмная тема: неактивная кнопка при наведении */
+html.dark .nav-btn:not(.active):hover {
+    background: white;
+    color: black;
+}
+
+/* Тёмная тема: активная кнопка при наведении инвертируется обратно */
+html.dark .nav-btn.active:hover {
+    background: transparent;
+    color: white;
+}
+
+/* Тёмная тема: иконки-кнопки */
+html.dark .icon-btn {
+    border-color: white;
+    color: white;
+    background: transparent;
+}
+
+/* Тёмная тема: иконки-кнопки при наведении */
+html.dark .icon-btn:hover {
+    background: white;
+    color: black;
+}
+
+/* Тёмная тема: декоративная дуга вверху (белая версия SVG) */
+html.dark .top-curve {
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 -70 100 120' preserveAspectRatio='none'><path d='M0 -40 Q50 50 100 -40' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>") no-repeat center;
+    background-size: 100% 100%;
+}
+
+/* Тёмная тема: декоративная дуга над навигацией (белая версия SVG) */
+html.dark .nav::before {
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20' preserveAspectRatio='none'><path d='M0 16 Q50 -1 100 16' fill='none' stroke='white' stroke-width='2' stroke-linecap='round'/></svg>") no-repeat center;
+    background-size: 100% 100%;
+}
+
+/* HOBBIES */
+/* Внутренний контейнер страницы хобби */
+.hobbies-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 620px;
+    overflow-y: auto;
+    padding: 0 4px 10px;
+}
+
+/* Карточка отдельного хобби */
+.hobby-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    border: 1.5px solid rgba(0,0,0,0.12);
+    border-radius: 16px;
+    padding: 14px 18px;
+    transition: border-color 0.2s, background 0.2s, transform 0.18s;
+}
+
+/* Карточка хобби при наведении сдвигается вправо */
+.hobby-card:hover {
+    border-color: rgba(0,0,0,0.35);
+    background: rgba(0,0,0,0.02);
+    transform: translateX(4px);
+}
+
+/* Иконка хобби */
+.hobby-icon {
+    font-size: 1.6rem;
+    flex-shrink: 0; /* Не сжимается */
+    margin-top: 2px;
+}
+
+/* Заголовок хобби */
+.hobby-text h3 {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: 0.02em;
+}
+
+/* Описание хобби */
+.hobby-text p {
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #555;
+    max-width: 100%;
+}
+
+/* Тёмная тема: карточка хобби */
+html.dark .hobby-card {
+    border-color: rgba(255,255,255,0.1);
+}
+
+/* Тёмная тема: карточка хобби при наведении */
+html.dark .hobby-card:hover {
+    border-color: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.04);
+}
+
+/* Тёмная тема: заголовок хобби */
+html.dark .hobby-text h3 {
+    color: white;
+}
+
+/* Тёмная тема: описание хобби */
+html.dark .hobby-text p {
+    color: rgba(255,255,255,0.6);
+}
+
+/* Блок с подписью и текстом (используется на странице "Обо мне") */
+.about-block {
+    width: 100%;
+    max-width: 480px;
+    text-align: left;
+    border-left: 2px solid rgba(0,0,0,0.15); /* Вертикальная полоса-акцент */
+    padding-left: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* Маленькая подпись-метка над блоком (например: "ОБРАЗОВАНИЕ") */
+.about-block-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.4;
+}
+
+/* Текст внутри информационного блока */
+.about-block p {
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: #444;
+    max-width: 100%;
+}
+
+/* Тёмная тема: вертикальная полоса блока */
+html.dark .about-block {
+    border-left-color: rgba(255,255,255,0.2);
+}
+
+/* Тёмная тема: текст блока */
+html.dark .about-block p {
+    color: rgba(255,255,255,0.7);
+}
+
+/* Тёмная тема: метка-подпись блока */
+html.dark .about-block-label {
+    color: white;
+}
+
+/* about-p paragraphs */
+/* Параграф с вертикальной полосой слева (альтернатива about-block) */
+.about-p {
+    font-size: 13.5px;
+    line-height: 1.85;
+    color: #444;
+    max-width: 480px;
+    width: 100%;
+    text-align: left;
+    position: relative;
+    padding-left: 14px;
+    border-left: 2px solid rgba(0,0,0,0.12);
+}
+
+/* Модификатор: завершающий параграф курсив и более заметная полоса */
+.about-p--closing {
+    border-left-color: rgba(0,0,0,0.25);
+    font-style: italic;
+}
+
+/* Тёмная тема: параграф */
+html.dark .about-p {
+    color: rgba(255,255,255,0.7);
+    border-left-color: rgba(255,255,255,0.15);
+}
+
+/* Тёмная тема: завершающий параграф */
+html.dark .about-p--closing {
+    border-left-color: rgba(255,255,255,0.3);
+}
+
+/* SCROLLBAR */
+/* Ширина полосы прокрутки контентной зоны */
+.content::-webkit-scrollbar {
+    width: 4px;
+}
+
+/* Фон трека полосы прокрутки прозрачный */
+.content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Ползунок полосы прокрутки */
+.content::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.18);
+    border-radius: 10px;
+}
+
+/* Ползунок при наведении темнее */
+.content::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,0.35);
+}
+
+/* Тёмная тема: ползунок прокрутки */
+html.dark .content::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.18);
+}
+
+/* textarea scrollbar */
+/* Полоса прокрутки в текстовой области формы */
+.contact-form textarea::-webkit-scrollbar {
+    width: 4px;
+}
+
+.contact-form textarea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.contact-form textarea::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.25);
+    border-radius: 10px;
+}
+
+.contact-form textarea::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,0.5);
+}
+
+/* Тёмная тема: ползунок textarea */
+html.dark .contact-form textarea::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.25);
+}
+
+/* Тёмная тема: ползунок textarea при наведении */
+html.dark .contact-form textarea::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.5);
+}
+
+/* Тёмная тема: ползунок контентной зоны при наведении */
+html.dark .content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.35);
+}
+
+/* skill tags */
+/* Контейнер для тегов-технологий (используется в разделе навыков) */
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+/* Отдельный тег технологии */
+.skill-tag {
+    padding: 6px 16px;
+    border: 1.5px solid rgba(0,0,0,0.15);
+    border-radius: 8px;
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: #222;
+    background: rgba(0,0,0,0.02);
+    transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.15s;
+    cursor: default; /* Не показывать курсор-указатель (не кликабельный) */
+}
+
+/* Тег при наведении инвертируется и немного поднимается */
+.skill-tag:hover {
+    border-color: #000;
+    background: #000;
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+/* Тёмная тема: тег технологии */
+html.dark .skill-tag {
+    border-color: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.03);
+}
+
+/* Тёмная тема: тег при наведении */
+html.dark .skill-tag:hover {
+    border-color: white;
+    background: white;
+    color: black;
+}
+
+/* Тёмная тема: разделители групп навыков */
+html.dark .skill-group {
+    border-top-color: rgba(255,255,255,0.08);
+}
+html.dark .skill-group:last-child {
+    border-bottom-color: rgba(255,255,255,0.08);
+}
+
+/* SOURCES */
+/* Внутренний контейнер страницы источников */
+.sources-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: 10px 20px 20px;
+    max-width: 540px;
+    width: 100%;
+}
+
+/* Заголовок страницы источников */
+.sources-inner h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: center;
+    color: #111;
+    letter-spacing: 0.03em;
+}
+
+/* Список источников */
+.sources-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    margin-top: 16px;
+}
+
+/* Карточка отдельного источника */
+.source-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    border: 1.5px solid rgba(0,0,0,0.1);
+    border-radius: 14px;
+    padding: 12px 16px;
+    transition: border-color 0.2s, background 0.2s, transform 0.18s;
+}
+
+/* Карточка источника при наведении  сдвигается вправо */
+.source-item:hover {
+    border-color: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.02);
+    transform: translateX(4px);
+}
+
+/* Иконка источника */
+.source-icon {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Название источника */
+.source-text h3 {
+    font-size: 13.5px;
+    font-weight: 700;
+    margin-bottom: 2px;
+    color: #111;
+}
+
+/* Описание источника */
+.source-text p {
+    font-size: 12px;
+    line-height: 1.5;
+    color: #555;
+    margin-bottom: 4px;
+    max-width: 100%;
+}
+
+/* Ссылка на источник подчёркивание через border-bottom */
+.source-link {
+    font-size: 11.5px;
+    color: #000;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(0,0,0,0.25); /* Кастомное подчёркивание */
+    transition: border-color 0.2s;
+}
+
+/* Ссылка при наведении подчёркивание темнее */
+.source-link:hover {
+    border-color: #000;
+}
+
+/* Активное состояние кнопки информации (когда открыта страница источников) */
+.icon-btn.active-info {
+    background: black;
+    color: white;
+}
+
+/* Тёмная тема: заголовок источников */
+html.dark .sources-inner h2 {
+    color: white;
+}
+
+/* Тёмная тема: карточка источника */
+html.dark .source-item {
+    border-color: rgba(255,255,255,0.1);
+}
+
+/* Тёмная тема: карточка источника при наведении */
+html.dark .source-item:hover {
+    border-color: rgba(255,255,255,0.3);
+    background: rgba(255,255,255,0.04);
+}
+
+/* Тёмная тема: название источника */
+html.dark .source-text h3 {
+    color: white;
+}
+
+/* Тёмная тема: описание источника */
+html.dark .source-text p {
+    color: rgba(255,255,255,0.6);
+}
+
+/* Тёмная тема: ссылка на источник */
+html.dark .source-link {
+    color: rgba(255,255,255,0.8);
+    border-bottom-color: rgba(255,255,255,0.3);
+}
+
+/* Тёмная тема: ссылка при наведении */
+html.dark .source-link:hover {
+    border-color: white;
+}
+
+/* Тёмная тема: активная кнопка информации */
+html.dark .icon-btn.active-info {
+    background: white;
+    color: black;
+}

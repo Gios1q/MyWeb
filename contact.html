@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!-- Объявление типа документа HTML5 -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Кодировка символов -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Адаптивность на мобильных устройствах -->
+    <title>Contact</title>
+    <!-- Заголовок вкладки -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Подключение общих стилей -->
+    <script>if(localStorage.getItem("theme")==="dark")document.documentElement.classList.add("dark");</script>
+    <!-- Применение тёмной темы до рендеринга страницы -->
+</head>
+<body>
+
+<div class="app">
+    <!-- Главная обёртка приложения -->
+    <div class="top-curve"></div>
+    <!-- Декоративный верхний изгиб -->
+    <div class="header">Contact</div>
+    <!-- Заголовок страницы -->
+
+    <div class="content">
+        <!-- Основная область контента -->
+        <div class="contact-inner">
+            <!-- Внутренний контейнер страницы контактов -->
+
+            <h2>Get in touch ✉️</h2>
+            <!-- Заголовок с призывом к контакту -->
+
+            <form class="contact-form" id="contact-form"
+                  action="https://formspree.io/f/maqdvnew"
+                  method="POST">
+                <!-- Форма обратной связи; отправка через сервис Formspree на указанный endpoint -->
+                <input type="text" name="name" placeholder="Your name" required />
+                <!-- Поле ввода имени; required — обязательно для заполнения -->
+                <input type="email" name="email" placeholder="Your email" required />
+                <!-- Поле ввода email с автоматической валидацией формата -->
+                <textarea name="message" placeholder="Your message..." required></textarea>
+                <!-- Многострочное поле для текста сообщения -->
+                <button type="submit" id="send-btn">Send message</button>
+                <!-- Кнопка отправки формы; id нужен для управления состоянием через JS -->
+            </form>
+
+            <div class="contact-links">
+                <!-- Блок с иконками-ссылками на социальные сети -->
+                <a class="contact-link" title="GitHub" href="https://github.com/Gios1q" target="_blank">GH</a>
+                <!-- Ссылка на профиль GitHub; target="_blank" — открывает в новой вкладке -->
+                <a class="contact-link" title="LinkedIn" href="https://www.linkedin.com/in/maksym-bondarenko-9b545a296" target="_blank">in</a>
+                <!-- Ссылка на профиль LinkedIn -->
+                <a class="contact-link" title="Telegram" href="https://t.me/MaksymDEX" target="_blank">TG</a>
+                <!-- Ссылка на Telegram -->
+                <a class="contact-link" title="Email" href="mailto:jonibondodessa@gmail.com">@</a>
+                <!-- Ссылка для открытия почтового клиента с предзаполненным адресом -->
+            </div>
+        </div>
+    </div>
+
+    <div class="nav">
+        <!-- Нижняя навигация -->
+        <div class="nav-center">
+            <a class="nav-btn small" href="about.html">About me</a>
+            <a class="nav-btn medium" href="skills.html">Skills</a>
+            <a class="nav-btn main active" href="contact.html">Contact</a>
+            <!-- active — текущая страница -->
+            <a class="nav-btn medium" href="portfolio.html">Portfolio</a>
+            <a class="nav-btn small" href="index.html">Home</a>
+        </div>
+        <div class="nav-right">
+            <!-- Кнопки переключения языка и темы -->
+            <button class="icon-btn theme">🌙</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Получаем ссылки на форму и кнопку отправки
+    const form = document.getElementById('contact-form');
+    const btn = document.getElementById('send-btn');
+
+    // Слушаем событие отправки формы
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault(); // Отменяем стандартное поведение браузера (перезагрузку страницы)
+        btn.textContent = 'Sending...'; // Меняем текст кнопки на "Отправка..."
+        btn.disabled = true; // Блокируем кнопку, чтобы не отправить дважды
+
+        // Асинхронно отправляем данные формы на Formspree
+        const res = await fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form), // Собираем данные из всех полей формы
+            headers: { 'Accept': 'application/json' } // Просим JSON-ответ
+        });
+
+        if (res.ok) {
+            // Если отправка прошла успешно
+            btn.textContent = '✓ Sent!'; // Показываем галочку и текст "Отправлено"
+            form.reset(); // Очищаем все поля формы
+            setTimeout(() => {
+                // Через 3 секунды возвращаем кнопку в исходное состояние
+                btn.textContent = 'Send message';
+                btn.disabled = false;
+            }, 3000);
+        } else {
+            // Если произошла ошибка при отправке
+            btn.textContent = '✗ Error. Try again'; // Сообщаем об ошибке
+            btn.disabled = false; // Разблокируем кнопку для повторной попытки
+        }
+    });
+</script>
+<script src="theme.js"></script>
+</body>
+</html>

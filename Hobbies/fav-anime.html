@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess & Go</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script>if(localStorage.getItem("theme")==="dark")document.documentElement.classList.add("dark");</script>
+    <style>
+        .section-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            width: 100%;
+            overflow-y: auto;
+        }
+
+        .section-block {
+            border: 2px solid #000;
+            border-radius: 16px;
+            padding: 18px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-body {
+            font-size: 12px;
+            line-height: 1.7;
+            color: #555;
+        }
+
+        .facts-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .fact-pill {
+            border: 1.5px solid #000;
+            border-radius: 50px;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        html.dark .section-block {
+            border-color: white;
+            color: white;
+        }
+
+        html.dark .section-body {
+            color: rgba(255,255,255,0.65);
+        }
+
+        html.dark .fact-pill {
+            border-color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="app">
+    <div class="top-curve"></div>
+    <div class="header">Top Anime & Donghua</div>
+
+    <div class="content">
+        <div class="skills-inner">
+
+            <h2>Anime</h2>
+            <div class="skill-group">
+                <div class="skills-group-title">🇯🇵 Japanese Anime</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Naruto — Action, Adventure, Shounen</span>
+                    <span class="skill-tag">Naruto Shippuden — Action, Adventure, Shounen</span>
+                    <span class="skill-tag">Attack on Titan — Action, Dark Fantasy</span>
+                    <span class="skill-tag">Death Note — Thriller, Supernatural</span>
+                    <span class="skill-tag">Jujutsu Kaisen — Action, Supernatural</span>
+                    <span class="skill-tag">Demon Slayer — Action, Historical, Supernatural</span>
+                    <span class="skill-tag">Tokyo Ghoul — Dark Fantasy, Horror</span>
+                    <span class="skill-tag">Fullmetal Alchemist: Brotherhood — Adventure, Fantasy</span>
+                    <span class="skill-tag">Chainsaw Man — Action, Dark Fantasy</span>
+                    <span class="skill-tag">One Punch Man — Action, Comedy, Superhero</span>
+                    <span class="skill-tag">Steins;Gate — Sci‑Fi, Thriller</span>
+                    <span class="skill-tag">Code Geass — Mecha, Strategy, Drama</span>
+                    <span class="skill-tag">Hunter x Hunter — Adventure, Fantasy</span>
+                    <span class="skill-tag">Bleach — Action, Supernatural</span>
+                    <span class="skill-tag">Dragon Ball Z — Action, Martial Arts</span>
+                    <span class="skill-tag">Dragon Ball Super — Action, Adventure</span>
+                    <span class="skill-tag">My Hero Academia — Superhero, Action</span>
+                    <span class="skill-tag">Black Clover — Fantasy, Magic</span>
+                    <span class="skill-tag">Fairy Tail — Adventure, Magic</span>
+                    <span class="skill-tag">Re:Zero — Isekai, Fantasy, Drama</span>
+                    <span class="skill-tag">Sword Art Online — Isekai, Sci‑Fi</span>
+                    <span class="skill-tag">No Game No Life — Fantasy, Strategy</span>
+                    <span class="skill-tag">Overlord — Isekai, Dark Fantasy</span>
+                    <span class="skill-tag">Made in Abyss — Adventure, Dark Fantasy</span>
+                    <span class="skill-tag">Mob Psycho 100 — Action, Comedy</span>
+                    <span class="skill-tag">Vinland Saga — Historical, Action</span>
+                    <span class="skill-tag">Berserk — Dark Fantasy</span>
+                    <span class="skill-tag">Parasyte — Sci‑Fi, Horror</span>
+                    <span class="skill-tag">Akame ga Kill — Action, Dark Fantasy</span>
+                    <span class="skill-tag">Blue Exorcist — Supernatural, Action</span>
+                    <span class="skill-tag">Dr. Stone — Sci‑Fi, Adventure</span>
+                    <span class="skill-tag">The Promised Neverland — Thriller, Mystery</span>
+                    <span class="skill-tag">Cyberpunk Edgerunners — Sci‑Fi, Action</span>
+                    <span class="skill-tag">Erased — Mystery, Thriller</span>
+                    <span class="skill-tag">Angel Beats — Drama, Supernatural</span>
+                    <span class="skill-tag">Clannad — Drama, Romance</span>
+                    <span class="skill-tag">Your Lie in April — Drama, Music</span>
+                    <span class="skill-tag">Toradora — Romance, Comedy</span>
+                    <span class="skill-tag">Kaguya-sama: Love is War — Romance, Comedy</span>
+                    <span class="skill-tag">Horimiya — Romance, Slice of Life</span>
+                    <span class="skill-tag">Spy x Family — Comedy, Action</span>
+                    <span class="skill-tag">Gintama — Comedy, Action</span>
+                    <span class="skill-tag">Kill la Kill — Action, Comedy</span>
+                    <span class="skill-tag">FLCL — Sci‑Fi, Experimental</span>
+                    <span class="skill-tag">Neon Genesis Evangelion — Mecha, Psychological</span>
+                    <span class="skill-tag">Cowboy Bebop — Sci‑Fi, Space Western</span>
+                    <span class="skill-tag">Samurai Champloo — Action, Historical</span>
+                    <span class="skill-tag">Trigun — Sci‑Fi, Western</span>
+                    <span class="skill-tag">Hellsing Ultimate — Action, Horror</span>
+                    <span class="skill-tag">Devilman Crybaby — Dark Fantasy</span>
+                </div>
+            </div>
+
+            <h2>Donghua</h2>
+            <div class="skill-group">
+                <div class="skills-group-title">🇨🇳 Chinese Animation</div>
+                <div class="skill-tags">
+                    <span class="skill-tag">Mo Dao Zu Shi — Fantasy, Cultivation</span>
+                    <span class="skill-tag">Heaven Official’s Blessing — Fantasy, Romance</span>
+                    <span class="skill-tag">The King's Avatar — Esports, Action</span>
+                    <span class="skill-tag">Soul Land — Fantasy, Cultivation</span>
+                    <span class="skill-tag">Battle Through the Heavens — Cultivation, Action</span>
+                    <span class="skill-tag">Perfect World — Fantasy, Adventure</span>
+                    <span class="skill-tag">Swallowed Star — Sci‑Fi, Action</span>
+                    <span class="skill-tag">Fog Hill of Five Elements — Fantasy, Martial Arts</span>
+                    <span class="skill-tag">Throne of Seal — Fantasy, Cultivation</span>
+                    <span class="skill-tag">A Will Eternal — Cultivation, Comedy</span>
+                    <span class="skill-tag">Stellar Transformation — Cultivation</span>
+                    <span class="skill-tag">Martial Universe — Cultivation</span>
+                    <span class="skill-tag">Great Journey of Teenagers — Wuxia, Adventure</span>
+                    <span class="skill-tag">Scissor Seven — Action, Comedy</span>
+                    <span class="skill-tag">White Cat Legend — Mystery, Comedy</span>
+                    <span class="skill-tag">Rakshasa Street — Supernatural, Action</span>
+                    <span class="skill-tag">Spare Me Great Lord — Fantasy, Comedy</span>
+                    <span class="skill-tag">The Daily Life of the Immortal King — Cultivation, Comedy</span>
+                    <span class="skill-tag">Legend of Exorcism — Fantasy, Action</span>
+                    <span class="skill-tag">Ling Cage: Incarnation — Sci‑Fi, Post‑Apocalyptic</span>
+                    <span class="skill-tag">Soul of Light — Fantasy</span>
+                    <span class="skill-tag">Immortality — Cultivation</span>
+                    <span class="skill-tag">Forty Millenniums of Cultivation — Sci‑Fi</span>
+                    <span class="skill-tag">The Land of Miracles — Fantasy</span>
+                    <span class="skill-tag">Snow Eagle Lord — Fantasy</span>
+                    <span class="skill-tag">Apotheosis — Cultivation</span>
+                    <span class="skill-tag">Against the Gods — Cultivation</span>
+                    <span class="skill-tag">Dragon Raja — Fantasy, Action</span>
+                    <span class="skill-tag">Big Brother — Cultivation</span>
+                    <span class="skill-tag">Shrouding the Heavens — Cultivation</span>
+                    <span class="skill-tag">The Island of Siliang — Fantasy</span>
+                    <span class="skill-tag">Blades of the Guardians — Action, Historical</span>
+                    <span class="skill-tag">Mirror: Twin Cities — Fantasy</span>
+                    <span class="skill-tag">The Legend of Qin — Historical, Martial Arts</span>
+                    <span class="skill-tag">Carp Reborn — Fantasy</span>
+                    <span class="skill-tag">Jade Dynasty — Fantasy</span>
+                    <span class="skill-tag">The Degenerate Drawing Jianghu — Martial Arts</span>
+                    <span class="skill-tag">Word of Honor — Wuxia</span>
+                    <span class="skill-tag">Young Brewmaster’s Adventure — Adventure</span>
+                    <span class="skill-tag">Wu Dong Qian Kun — Cultivation</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+   
+
+    <div class="nav">
+        <div class="nav-center">
+            <a class="nav-btn main" href="../hobbies.html">← Hobbies</a>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn theme">🌙</button>
+        </div>
+    </div>
+</div>
+<script src="../theme.js"></script>
+</body>
+</html>

@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favourite Music</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <script>if(localStorage.getItem("theme")==="dark")document.documentElement.classList.add("dark");</script>
+    <!-- Мгновенное применение тёмной темы до отрисовки страницы -->
+    <style>
+        /* ОБЁРТКА СЛАЙДЕРА */
+        .hobbies-slider-wrap {
+            width: 100%;
+            height: 100%;
+            display: flex;              /* Вертикальное расположение слайдера и навигации */
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        /* КОНТЕЙНЕР СЛАЙДЕРА (маска */
+        .hobbies-slider {
+            width: 100%;
+            flex: 1;
+            overflow: hidden;
+            padding: 0 2px;
+            box-sizing: border-box;
+        }
+
+        /* движущаяся полоса с карточками */
+        .hobbies-track {
+            display: flex;              /* Карточки расположены в ряд */
+            align-items: center;
+            gap: 14px;                  /* Отступ между карточками */
+            height: 100%;
+            transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+            will-change: transform;
+        }
+
+        /* КАРТОЧКА ХОББИ */
+        .hobby-card {
+            flex: 0 0 calc((100% - 20px) / 2); /* Ширина = 1/3 трека минус 2 отступа */
+            height: 100%;
+            max-height: 390px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            gap: 10px;
+            border: 2px solid #000;
+            border-radius: 18px;
+            padding: 20px 16px;
+            transition: background 0.2s, color 0.2s, border-color 0.3s, transform 0.18s;
+        }
+
+        /* Карточка при наведении: инвертированные цвета и лёгкий подъём */
+        .hobby-card:hover {
+            background: #000;
+            color: #fff;
+            transform: translateY(-3px);
+        }
+
+        /* ИКОНКА ХОББИ */
+        .hobby-icon {
+            font-size: 1.8rem;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* ТЕКСТОВЫЙ БЛОК КАРТОЧКИ */
+        .hobby-text h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: 0.02em;
+        }
+
+        .hobby-text p {
+            font-size: 12px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* Описание становится белым при наведении на карточку */
+        .hobby-card:hover .hobby-text p {
+            color: rgba(255,255,255,0.75);
+        }
+
+        /* НАВИГАЦИЯ СЛАЙДЕРА (стрелки + точки) */
+        .hobbies-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            width: 100%;
+        }
+
+        /* КНОПКИ-СТРЕЛКИ */
+        .hobbies-arrow {
+            width: 36px;
+            height: 36px;
+            border: 2px solid #000;
+            border-radius: 50%;
+            background: transparent;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, color 0.2s;
+            flex-shrink: 0;                  }
+
+        .hobbies-arrow:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* Заблокированная стрелка (когда нельзя листать дальше) */
+        .hobbies-arrow:disabled {
+            opacity: 0.25;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        /* ТОЧКИ-ИНДИКАТОРЫ ТЕКУЩЕГО СЛАЙДА */
+        .hobbies-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .hobbies-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.2);
+            transition: background 0.2s, transform 0.2s;
+            cursor: pointer;
+        }
+
+        /* Активная точка выделена цветом и немного увеличена */
+        .hobbies-dot.active {
+            background: #000;
+            transform: scale(1.3);
+        }
+
+        /* КНОПКА "ПОДРОБНЕЕ" НА КАРТОЧКЕ */
+        .hobby-btn {
+            display: inline-block;
+            margin-top: 8px;
+            padding: 7px 16px;
+            border: 2px solid #000;
+            border-radius: 50px;
+            background: transparent;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            transition: background 0.2s, color 0.2s;
+            letter-spacing: 0.02em;
+        }
+
+        /* При наведении на карточку граница кнопки становится белой */
+        .hobby-card:hover .hobby-btn {
+            border-color: #fff;
+        }
+
+        /* При наведении на саму кнопку заполняется белым */
+        .hobby-card:hover .hobby-btn:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* ТЁМНАЯ ТЕМА */
+
+        /* Кнопка в тёмной теме — белая */
+        html.dark .hobby-btn {
+            border-color: white;
+            color: white;
+        }
+
+        html.dark .hobby-card:hover .hobby-btn {
+            border-color: #000;
+            color: #000;
+        }
+
+        html.dark .hobby-card:hover .hobby-btn:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* Карточки в тёмной теме белая граница, белый текст */
+        html.dark .hobby-card {
+            border-color: white;
+            color: white;
+        }
+
+        /* При наведении в тёмной теме белый фон, чёрный текст */
+        html.dark .hobby-card:hover {
+            background: white;
+            color: black;
+        }
+
+        html.dark .hobby-card:hover .hobby-text p {
+            color: rgba(0,0,0,0.7);
+        }
+
+        html.dark .hobby-text p {
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Стрелки в тёмной теме */
+        html.dark .hobbies-arrow {
+            border-color: white;
+            color: white;
+        }
+
+        html.dark .hobbies-arrow:hover {
+            background: white;
+            color: black;
+        }
+
+        /* Точки в тёмной теме */
+        html.dark .hobbies-dot {
+            background: rgba(255,255,255,0.25);
+        }
+
+        html.dark .hobbies-dot.active {
+            background: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app">
+    <div class="top-curve"></div>
+    <div class="header">My Favourite Music</div>
+    <div class="content" style="align-items: center; padding: 20px 20px 16px 20px; height: 100%;">
+        <!-- Основная область контента; инлайн-стили задают отступы и высоту для слайдера -->
+        <div class="hobbies-slider-wrap" style="height: 100%;">
+            <div class="hobbies-slider" id="hobbies-slider">
+                <!-- Маска слайдера — скрывает карточки снаружи -->
+                <div class="hobbies-track" id="hobbies-track">
+                    <!-- Движущийся трек с карточками; сдвигается через transform: translateX -->
+
+                    <!-- КАРТОЧКИ ХОББИ -->
+
+                    <div class="hobby-card">
+
+                            <div class="hobby-icon">
+                                <img src="../image/Gostra.jpg" alt="Gostra" width="80">
+
+
+                            <div class="hobby-text">
+                                <h3>Gostra — Dzenking</h3>
+
+                                <p>
+                                    <b>About the song:</b><br>
+                                    The song is about strong emotions, inner tension and personal struggles. It sounds tense and dramatic, as if the music conveys a sense of frustration and powerful emotions that cannot be hidden.
+                                </p>
+
+                                <p>
+                                    <b>Atmosphere:</b><br>
+                                    Dark, emotional, intense, and powerful.
+                                </p>
+
+                                <!-- Плеер -->
+                                <audio controls>
+                                    <source src="../music/gostra.mp3" type="audio/mpeg">
+                                </audio>
+
+                            </div>
+                            </div>
+
+                      </div>
+
+                      <div class="hobby-card">
+                          <div class="hobby-icon">
+                              <img src="../image/White Night.jpg" alt="White Night" width="80">
+
+
+                              <div class="hobby-text">
+                                  <h3>White Night — Chernikovskaya Hata</h3>
+
+                                  <p>
+                                      <b>About the song:</b><br>
+                                      The song raises the topic of trust between people. It asks the question of whether a person really believes the other, and shows the fragility of human relationships.
+                                  </p>
+
+                                  <p>
+                                      <b>Atmosphere:</b><br>
+                                      Melancholic, nostalgic, calm, dreamy.
+                                  </p>
+
+                                  <!-- Плеер -->
+                                  <audio controls>
+                                      <source src="../music/White Night.mp3" type="audio/mpeg">
+                                  </audio>
+
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="hobby-card">
+                          <div class="hobby-icon">
+                              <img src="../image/Do You Believe Me.webp" alt="Do You Believe Me? — Lyudmila Berlinskaia" width="80">
+
+
+                              <div class="hobby-text">
+                                  <h3>Do You Believe Me? — Lyudmila Berlinskaia</h3>
+
+                                  <p>
+                                      <b>About the song:</b><br>
+                                      The song raises the topic of trust between people. It asks the question of whether a person really believes the other, and shows the fragility of human relationships.
+                                  </p>
+
+                                  <p>
+                                      <b>Atmosphere:</b><br>
+                                      Emotional, thoughtful, intimate.
+                                  </p>
+
+                                  <!-- Плеер -->
+                                  <audio controls>
+                                      <source src="../music/Do You Believe Me.mp3" type="audio/mpeg">
+
+                                  </audio>
+
+                              </div>
+                          </div>
+                      </div>
+                    <div class="hobby-card">
+                        <div class="hobby-icon">
+                            <img src="../image/What Is Love.jpg" alt="What Is Love? — Grad!ent" width="80">
+
+
+                            <div class="hobby-text">
+                                <h3>What Is Love? — Grad!ent</h3>
+
+                                <p>
+                                    <b>About the song:</b><br>
+                                    The composition reflects on what love really means. It asks a philosophical question about feelings, relationships, and how people understand love.
+                                </p>
+
+                                <p>
+                                    <b>Atmosphere:</b><br>
+                                    Romantic, thoughtful, a little sad.
+                                </p>
+
+                                <!-- Плеер -->
+                                <audio controls>
+                                    <source src="../music/What Is Love.mp3" type="audio/mpeg">
+
+                                </audio>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="hobby-card">
+                        <div class="hobby-icon">
+                            <img src="../image/Toffees and Risks.jpg" alt="Toffees and Risks — Monetochka" width="80">
+
+
+                            <div class="hobby-text">
+                                <h3>Toffees and Risks — Monetochka</h3>
+
+                                <p>
+                                    <b>About the song:</b><br>
+                                    The song is about youth, choice and risk. It combines lightness, irony and unusual images through which thoughts about life and the courage to make decisions are conveyed.
+                                </p>
+
+                                <p>
+                                    <b>Atmosphere:</b><br>
+                                    Dark, emotional, intense, and powerful.
+                                </p>
+
+                                <!-- Плеер -->
+                                <audio controls>
+                                    <source src="../music/Toffees and Risks.mp3" type="audio/mpeg">
+
+                                </audio>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                  </div>
+              </div>
+
+              <!-- НИЖНЯЯ НАВИГАЦИЯ СЛАЙДЕРА -->
+            <div class="hobbies-nav">
+                             <button class="hobbies-arrow" id="prev-btn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 3 L5 8 L10 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <!-- SMIL-анимация: стрелка "скачет" при нажатии -->
+                            <animate attributeName="d"
+                                values="M10 3 L5 8 L10 13; M8 3 L3 8 L8 13; M10 3 L5 8 L10 13"
+                                dur="0.4s" begin="indefinite" id="prev-anim"
+                                calcMode="spline"
+                                keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
+                                fill="freeze"/>
+                        </path>
+                    </svg>
+                </button>
+
+                <div class="hobbies-dots" id="hobbies-dots"></div>
+                <!-- Контейнер для точек-индикаторов; заполняется через JavaScript -->
+
+                <!-- Кнопка "вперёд" с SVG-стрелкой -->
+                <button class="hobbies-arrow" id="next-btn">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 3 L11 8 L6 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <!-- SMIL-анимация стрелки "вперёд" -->
+                            <animate attributeName="d"
+                                values="M6 3 L11 8 L6 13; M8 3 L13 8 L8 13; M6 3 L11 8 L6 13"
+                                dur="0.4s" begin="indefinite" id="next-anim"
+                                calcMode="spline"
+                                keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
+                                fill="freeze"/>
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="nav">
+        <div class="nav-center">
+            <a class="nav-btn main" href="../hobbies.html">← Hobbies</a>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn theme">🌙</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ИНИЦИАЛИЗАЦИЯ ЭЛЕМЕНТОВ СЛАЙДЕРА
+    const slider = document.getElementById('hobbies-slider');   // Маска слайдера
+    const track = document.getElementById('hobbies-track');     // Движущийся трек
+    const prevBtn = document.getElementById('prev-btn');        // Кнопка "назад"
+    const nextBtn = document.getElementById('next-btn');        // Кнопка "вперёд"
+    const dotsWrap = document.getElementById('hobbies-dots');   // Контейнер точек
+
+    // Получаем оригинальные карточки и запоминаем их количество
+    const originalCards = Array.from(track.querySelectorAll('.hobby-card'));
+    const total = originalCards.length; // 8 карточек
+    const visible = 3; // Количество видимых карточек одновременно
+
+    // БЕСКОНЕЧНЫЙ СЛАЙДЕР: клонирование крайних карточек =====
+    // Клонируем последние 3 карточки и вставляем в начало трека
+    originalCards.slice(-visible).reverse().forEach(c => track.insertBefore(c.cloneNode(true), track.firstChild));
+    // Клонируем первые 3 карточки и добавляем в конец трека
+    originalCards.slice(0, visible).forEach(c => track.appendChild(c.cloneNode(true)));
+
+    // Теперь в треке: [клоны конца] + [оригиналы] + [клоны начала]
+    const allCards = Array.from(track.querySelectorAll('.hobby-card'));
+
+    // СОЗДАНИЕ ТОЧЕК-ИНДИКАТОРОВ
+    for (let i = 0; i < total; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'hobbies-dot';
+        dot.addEventListener('click', () => goTo(i)); // Клик по точке переход к нужному слайду
+        dotsWrap.appendChild(dot);
+    }
+
+    // realIndex индекс в расширенном треке (с клонами)
+    // logicalIndex видимый индекс (0..total-1)
+    let realIndex = visible;  // Начинаем с первой оригинальной карточки
+    let logicalIndex = 0;
+    let isAnimating = false;  // Флаг: идёт ли анимация (блокирует двойные клики)
+
+    // Вычисляем ширину одного шага (ширина карточки + gap)
+    function getStep() {
+        if (allCards.length < 2) return allCards[0].offsetWidth + 14;
+        const r0 = allCards[0].getBoundingClientRect();
+        const r1 = allCards[1].getBoundingClientRect();
+        return r1.left - r0.left; // Расстояние между левыми краями соседних карточек
+    }
+
+    // Обновляем активную точку под текущий logicalIndex
+    function updateDots() {
+        dotsWrap.querySelectorAll('.hobbies-dot').forEach((d, i) => {
+            d.classList.toggle('active', i === logicalIndex);
+        });
+    }
+
+    // Перемещаем трек к нужному realIndex
+    function jumpTo(ri, animate) {
+        // Включаем/отключаем CSS-переход для плавной или мгновенной смены
+        track.style.transition = animate ? 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none';
+        track.style.transform = `translateX(-${ri * getStep()}px)`;
+    }
+
+    // После завершения анимации: если попали на клон мгновенно прыгаем на оригинал
+    track.addEventListener('transitionend', () => {
+        if (realIndex <= visible - 1) {
+            // Перешли на клон начала прыгаем к концу оригиналов
+            realIndex += total;
+            jumpTo(realIndex, false);
+        } else if (realIndex >= visible + total) {
+            // Перешли на клон конца прыгаем к началу оригиналов
+            realIndex -= total;
+            jumpTo(realIndex, false);
+        }
+        isAnimating = false; // Анимация завершена разблокируем клики
+    });
+
+    // Переход к конкретному логическому слайду
+    function goTo(logical, animate = true) {
+        if (isAnimating) return;
+        isAnimating = true;
+        logicalIndex = ((logical % total) + total) % total;
+        realIndex = logicalIndex + visible;
+        updateDots();
+        jumpTo(realIndex, animate);
+    }
+
+    // ОБРАБОТЧИКИ КНОПОК НАВИГАЦИИ
+
+    // Кнопка "назад"
+    prevBtn.addEventListener('click', () => {
+        if (isAnimating) return;
+        // Запускаем SMIL-анимацию стрелки
+        const anim = document.getElementById('prev-anim');
+        if (anim) anim.beginElement();
+        isAnimating = true;
+        realIndex--;  
+        logicalIndex = ((realIndex - visible) % total + total) % total;
+        updateDots();
+        jumpTo(realIndex, true);
+    });
+
+    // Кнопка "вперёд"
+    nextBtn.addEventListener('click', () => {
+        if (isAnimating) return;
+        const anim = document.getElementById('next-anim');
+        if (anim) anim.beginElement();
+        isAnimating = true;
+        realIndex++; 
+        logicalIndex = ((realIndex - visible) % total + total) % total;
+        updateDots();
+        jumpTo(realIndex, true);
+    });
+
+    // ПОДДЕРЖКА СВАЙПОВ НА МОБИЛЬНЫХ
+    let startX = 0;
+    track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; });
+    track.addEventListener('touchend', e => {
+        const diff = startX - e.changedTouches[0].clientX;
+        if (diff > 40) nextBtn.click();       
+        else if (diff < -40) prevBtn.click(); 
+    });
+
+    // При изменении размера окна пересчитываем позицию без анимации
+    window.addEventListener('resize', () => jumpTo(realIndex, false));
+
+    // ИНИЦИАЛИЗАЦИЯ: ждём два кадра для корректного расчёта размеров
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            jumpTo(realIndex, false); // Устанавливаем начальную позицию
+            updateDots();             // Подсвечиваем первую точку
+            isAnimating = false;
+        });
+    });
+</script>
+<script src="../theme.js"></script>
+</body>
+</html>

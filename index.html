@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script>if(localStorage.getItem("theme")==="dark")document.documentElement.classList.add("dark");</script>
+    <!-- Мгновенное применение тёмной темы до загрузки страницы — предотвращает мигание светлой темы -->
+</head>
+<body>
+<div class="app">
+    <div class="top-curve"></div>
+    <!-- Декоративный изгиб в верхней части страницы -->
+    <div class="header">Home</div>
+    <div class="content">
+        <div class="home-inner">
+            <!-- Внутренний контейнер для центрирования содержимого главной страницы -->
+
+            <div class="home-avatar">
+                <img id="avatar-img" src="image/Ch.png" alt="Avatar" style="width: 100%; height: 100%; object-fit: contain;">
+                <!-- Изображение аватара; id="avatar-img" нужен для смены картинки при переключении темы -->
+            </div>
+
+            <h2>Hi, I'm Maksym</h2>
+            <hr class="home-divider">
+            <!-- Горизонтальная разделительная линия под заголовком -->
+
+            <p class="home-intro">
+                I created this website as a personal space to introduce myself,
+                share my interests, and showcase my projects. Here you can learn
+                more about who I am, what I enjoy, and what I'm currently working on.
+            </p>
+
+            <ul class="home-list">
+                <li>Information about me and my background</li>
+                <li>My hobbies and personal interests</li>
+                <li>My skills and technical experience</li>
+                <li>Selected projects from my portfolio</li>
+            </ul>
+
+            <p class="home-closing">
+                Where creativity and growth meet — feel free to explore.
+            </p>
+
+        </div>
+    </div>
+
+    <div class="nav">
+        <div class="nav-left">
+            <a href="sources.html" class="icon-btn info" title="Sources">i</a>
+        </div>
+        <div class="nav-center">
+            <a class="nav-btn small" href="contact.html">Contact</a>
+            <a class="nav-btn medium" href="portfolio.html">Portfolio</a>
+            <a class="nav-btn main active" href="index.html">Home</a>
+            <a class="nav-btn medium" href="about.html">About me</a>
+            <a class="nav-btn small" href="skills.html">Skills</a>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn theme">🌙</button>
+        </div>
+    </div>
+</div>
+
+<script src="theme.js"></script>
+</body>
+</html>
