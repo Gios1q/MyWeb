@@ -7,6 +7,60 @@
     <link rel="stylesheet" href="css/style.css">
     <script>if(localStorage.getItem("theme")==="dark")document.documentElement.classList.add("dark");</script>
 
+    <style>
+
+         .video-showcase {
+            position: relative;
+            margin: 2rem auto;
+            max-width: 680px;
+            width: calc(100% - 2rem);
+        }
+
+        .video-frame {
+            position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,0.08),
+                0 8px 32px rgba(0,0,0,0.45),
+                0 0 80px rgba(99,102,241,0.18);
+            background: #0a0a0f;
+            transition: box-shadow 0.4s ease;
+        }
+
+
+
+        @property --angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        @keyframes spin-border {
+            to { --angle: 360deg; }
+        }
+
+        .video-frame video {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 18px;
+        }
+
+
+        .video-label .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #6366f1;
+            box-shadow: 0 0 8px #6366f1;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+
+
+
+    </style>
 </head>
 <body>
 
@@ -19,7 +73,22 @@
             <h2>My Work</h2>
         </div>
     </div>
-
+    <div class="video-showcase">
+        <div class="video-label">
+            <span class="dot"></span>
+        </div>
+        <div class="video-frame">
+            <iframe
+                    width="100%"
+                    height="400"
+                    src="https://www.youtube.com/embed/6Wj0dkjzBj4"
+                    title="YouTube video player"
+                    frameborder="0"
+                    allowfullscreen>
+            </iframe>
+        </div>
+        <div class="video-reflection"></div>
+    </div>
     <div class="nav">
         <div class="nav-center">
             <a class="nav-btn small" href="skills.html">Skills</a>
